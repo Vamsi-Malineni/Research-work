@@ -102,12 +102,19 @@ combined_csv1.to_csv(u,index=False)
 #======================================================================================#
 
 #======================================================================================#
-# Code for deleting the raw data 
+# Code for deleting files the raw_data and raw_data_final
 #======================================================================================#
-#for folder,subfolders,files in os.walk(r'E:/Research work/Simulations and data/Unsteady trials/data/raw_data'):
-#	for file in files:
-#			if file.endswith('.csv'):
-#				path=os.path.join(folder,file)
-#				os.remove(path)
+for folder,subfolders,files in os.walk(r'E:/Research work/Simulations and data/Unsteady trials/data/raw_data'):
+	for file in files:
+			if file.endswith('.csv'):
+				path=os.path.join(folder,file)
+				os.remove(path)
+
+for folder,subfolders,files in os.walk(r'E:/Research work/Simulations and data/Unsteady trials/data/raw_data_final'):
+	for file in files:
+			if file.endswith('.csv'):
+				path=os.path.join(folder,file)
+				os.remove(path)
+
 #======================================================================================#
 #======================================================================================#
