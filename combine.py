@@ -4,17 +4,41 @@ import time
 import pandas as pd
 import numpy as np
 
+def createFolder(directory):
+    try:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+    except OSError:
+        print ('Error: Creating directory. ' +  directory)
+
+
 os.chdir(r"E:\Research work\Simulations and data\Unsteady trials\data\raw_data")
 
-all_filenames=[]
+all_filenames_orig=[]
 for infile in sorted(glob.glob('*.csv'),key=os.path.getmtime):
-	all_filenames.append(str(infile))
+	all_filenames_orig.append(str(infile))
+
+#======================================================================================#
+# Refining the raw data by reordering the data points
+#======================================================================================#
+source_path=r'E:\Research work\Simulations and data\Unsteady trials\data'
+
+name1="raw_data_final"
+name1=os.path.join(source_path,name1)
+createFolder(name1)
+
+for i in range(len(all_filenames_orig)):
+    file_i=name1+'/'+str(all_filenames_orig[i])
+    bod=pd.read_csv(all_filenames_orig[i])
+    bod.sort_values(["Y (m)","X (m)"],axis=0,ascending=[True,True],inplace=True)
+    bod.to_csv(file_i,index=False)
 
 #======================================================================================#
 # Code for creating a separate folder for storing data thats extracted 
 # a new folder is created each time this script is executed.
 #======================================================================================#
 
+# path where the files will be saved 
 path=r'E:\Research work\Simulations and data\Unsteady trials\data\trials'	
 
 def createFolder(directory):
@@ -24,6 +48,15 @@ def createFolder(directory):
     except OSError:
         print ('Error: Creating directory. ' +  directory)
 
+#======================================================================================#
+# Code for extracting the refined raw data
+#======================================================================================#
+
+os.chdir(r"E:\Research work\Simulations and data\Unsteady trials\data\raw_data_final")
+
+all_filenames=[]
+for infile in sorted(glob.glob('*.csv'),key=os.path.getmtime):
+	all_filenames.append(str(infile))
 #======================================================================================#
 # Code for extracting data and presenting it in the form as given by paper.
 #======================================================================================#
@@ -71,14 +104,10 @@ combined_csv1.to_csv(u,index=False)
 #======================================================================================#
 # Code for deleting the raw data 
 #======================================================================================#
-
-for folder,subfolders,files in os.walk(r'E:/Research work/Simulations and data/Unsteady trials/data/raw_data'):
-	for file in files:
-			if file.endswith('.csv'):
-				path=os.path.join(folder,file)
-				os.remove(path)
+#for folder,subfolders,files in os.walk(r'E:/Research work/Simulations and data/Unsteady trials/data/raw_data'):
+#	for file in files:
+#			if file.endswith('.csv'):
+#				path=os.path.join(folder,file)
+#				os.remove(path)
 #======================================================================================#
 #======================================================================================#
-
-
-
