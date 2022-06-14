@@ -6,15 +6,19 @@ import pickle
 from pathlib import Path
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from pyDOE import lhs
 
 def dom_data(N_train,T,min_max):
 	xmax,xmin,ymax,ymin,tmax,tmin=min_max
 
 	num_pts=int(N_train/T) # Gives the number of points per time step to be included in training dataset
-	data_idx=np.zeros((N_train,3)) # stores the 
+	# data_idx=np.zeros((N_train,3)) # stores the 
 
-	for i in range(len(data_idx)):
-		data_idx[i,0:2]=[float(np.random.uniform(xmin,xmax,1)),float(np.random.uniform(ymin,ymax,1))]
+	# for i in range(len(data_idx)):
+	# 	data_idx[i,0:2]=[float(np.random.uniform(xmin,xmax,1)),float(np.random.uniform(ymin,ymax,1))]
+
+	# Using latin hypercube sampling
+	data_idx=lb+(ub-lb)*lhs(3,N_train)
 
 	j=0
 	for i in range(0,len(data_idx),num_pts):
@@ -87,11 +91,7 @@ def load_data(N_train):
 
 	#======================= initial ==================================#
 	data_t0=data_domain[:,:][data_domain[:,2]==0]
-
-
 	
-	batch_size=32
-
 	#idx = np.random.choice(data_domain.shape[0], N_train, replace=False)
 	#data_idx=data_domain[idx][:,0:3]
 	min_max=[xmax,xmin,ymax,ymin,tmax,tmin]
