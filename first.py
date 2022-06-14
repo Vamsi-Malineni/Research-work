@@ -226,4 +226,65 @@ def scatter(data_idx,data_sup_b_train):
 	plt.show()
 
 
-scatter(data_idx,data_sup_b_train)
+#scatter(data_idx,data_sup_b_train)
+
+batch_size=32
+
+dom_bat_no=np.random.randint(1,(math.ceil(N_train/batch_size)))
+init_bat_no=np.random.randint(1,(math.ceil(data_t0.shape[0]/batch_size)))
+bound_bat_no=np.random.randint(1,(math.ceil((data_sup_b_train.shape[0]/4)/batch_size)))
+
+# call batches here 
+d_batch = domain_batches (batch_size)[dom_bat_no][0]
+i_batch = ic_batches     (batch_size)[init_bat_no][0]
+b_batch1 =bc_batches     (batch_size,1)[bound_bat_no][0]
+b_batch2 =bc_batches     (batch_size,2)[bound_bat_no][0]
+b_batch3 =bc_batches     (batch_size,3)[bound_bat_no][0]
+b_batch4 =bc_batches     (batch_size,4)[bound_bat_no][0]
+
+
+#print(dom_bat_no,init_bat_no,bound_bat_no)
+
+# number of batches in each dataset
+
+n1=math.ceil(N_train/batch_size)
+n2=math.ceil(data_t0.shape[0]/batch_size)
+n3=math.ceil((data_sup_b_train.shape[0]/4)/batch_size)
+
+# print(data_t0.shape[0],n2)
+# print(data_sup_b_train.shape[0],n3)
+# print(N_train,n1)
+dom=[]
+for i in range(0,n1):
+	dom.append(i)
+
+bound=[]
+for i in range(0,n3):
+	bound.append(i)
+
+init=[]
+for i in range(0,n2):
+	init.append(i)
+
+print(len(dom),len(bound),len(init))
+
+for j in range(len(dom)):
+	#d=domain_batches(batch_size)[j][0]
+	print(j)
+
+	if j>len(bound):
+		print("boundary batch limit exceeded")
+		break
+	else:
+		# b1 =bc_batches     (batch_size,1)[j][0]
+		# b2 =bc_batches     (batch_size,2)[j][0]
+		# b3 =bc_batches     (batch_size,3)[j][0]
+		# b4 =bc_batches     (batch_size,4)[j][0]
+		print("in limit")
+	
+	if j>len(init):
+		print("initial batch limit exceeded")
+		break
+	else:
+		# i=ic_batches(batch_size)[j][0]
+		print("in limit")
