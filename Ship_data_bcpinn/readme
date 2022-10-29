@@ -1,0 +1,5 @@
+This folder contains codes corresponding to application of BC-PINN method to ship simulations
+
+Reynolds number = 3.9e+9
+Time step = 0.01
+Domain considered = (-5,0) to (-10,2) and complete z
